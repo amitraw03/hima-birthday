@@ -84,7 +84,7 @@ export default function Questions() {
 
   const navigate = useNavigate();
 
-  const choose = (option) => {
+  const choose = async (option) => {
     const updated = [...answers, option];
     setAnswers(updated);
 
@@ -93,7 +93,7 @@ export default function Questions() {
     } else {
       setFinished(true);
 
-      console.log("Her choices:", updated);
+      await submitAnswers(updated);
 
       setTimeout(() => {
         navigate("/final");
@@ -108,14 +108,6 @@ export default function Questions() {
         <p>Preparing your final birthday message...</p>
       </div>
     );
-  } else {
-    setFinished(true);
-
-    submitAnswers(updated);
-
-    setTimeout(() => {
-      navigate("/final");
-    }, 2000);
   }
 
   const q = questions[index];
@@ -137,7 +129,7 @@ export default function Questions() {
             whileTap={{ scale: 0.95 }}
             onClick={() => choose(q.left.label)}
           >
-            <img src={q.left.img} />
+            <img src={q.left.img} alt={q.left.label} />
             <p>{q.left.label}</p>
           </motion.div>
 
@@ -147,7 +139,7 @@ export default function Questions() {
             whileTap={{ scale: 0.95 }}
             onClick={() => choose(q.right.label)}
           >
-            <img src={q.right.img} />
+            <img src={q.right.img} alt={q.right.label} />
             <p>{q.right.label}</p>
           </motion.div>
         </div>
